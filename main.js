@@ -1,5 +1,5 @@
 /* eslint-env webextensions */
-const MAX_WORKLOG_SIZE = 30000;
+const MAX_WORKLOG_SIZE = 32000;
 const MENU_TABS_ID = "prj";
 const REMAINING_CHAR_BOX_ID = "remaining-char-box";
 const WORKLOG_ADD_BOX = "textarea#TextBox_AddTo_WorkLog";

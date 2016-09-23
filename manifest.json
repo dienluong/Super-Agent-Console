@@ -18,7 +18,6 @@
 
   "content_scripts": [
     {
-      // "matches": ["*://mtl-tswebsrv/combinedQ/index.jsp"],
       "matches": ["https://network.nuance.com/portal/server.pt/gateway/PTARGS_0_9815_727_201_0_43/AgentConsole/AgentConsoleTicket.aspx?CIT=*"],
       "js": ["main.js"]
     }
@@ -29,5 +28,4 @@
   },
 
   "permissions": ["notifications", "alarms", "background"]
-
 }
