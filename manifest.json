@@ -1,0 +1,33 @@
+{
+
+  "manifest_version": 2,
+  "name": "SuperAgentConsole",
+  "version": "1",
+
+  "description": "Enhancements to Agent Console",
+  "icons": {
+    "48": "icons/border-48.png"
+  },
+
+  "applications": {
+    "gecko": {
+      "id": "SuperAgentConsole@dluong.org",
+      "strict_min_version": "45.0.0"
+    }
+  },
+
+  "content_scripts": [
+    {
+      // "matches": ["*://mtl-tswebsrv/combinedQ/index.jsp"],
+      "matches": ["https://network.nuance.com/portal/server.pt/gateway/PTARGS_0_9815_727_201_0_43/AgentConsole/AgentConsoleTicket.aspx?CIT=*"],
+      "js": ["main.js"]
+    }
+  ],
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "permissions": ["notifications", "alarms", "background"]
+
+}
