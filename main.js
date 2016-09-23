@@ -1,40 +1,61 @@
 /* eslint-env webextensions */
 const MAX_WORKLOG_SIZE = 30000;
-const TABS_ID = "prj";
-const REMAINING_CHAR_BOX = "remaining-char-box";
+const MENU_TABS_ID = "prj";
+const REMAINING_CHAR_BOX_ID = "remaining-char-box";
 const WORKLOG_ADD_BOX = "textarea#TextBox_AddTo_WorkLog";
 const WORKLOG_BOX = "textarea#Repeater_WorkLog_ctl00_TextBox_Existing_WorkLog";
 document.body.style.border = "5px solid green";
 
-function calcLogSize(log) {
-	let logElement = document.querySelector(log);
+function calcLogSize(logElement) {
 	let logSize = logElement && logElement.textLength;
 	//console.log(logSize);
 	return logSize;
 }
 
-function showRemainingChar(max, size) {
-	let remaining = max - size;
 
-	//console.log(remaining);
+class RemainingCharBox {
+	constructor() {
+		this.sizeLi = document.createElement("li");
+		this.sizeSpan = document.createElement("span");
+		this.sizeText = document.createTextNode("");
 
-	let sizeLi = document.createElement("li");
-	let sizeSpan = document.createElement("span");
-	let sizeText = document.createTextNode(remaining);
+		this.sizeLi.setAttribute("style", "display: inline;");
+		this.sizeSpan.setAttribute("id", REMAINING_CHAR_BOX_ID);
+		this.sizeSpan.setAttribute("style", "color: black;");
+		this.sizeLi.appendChild(this.sizeSpan);
+		this.sizeSpan.appendChild(this.sizeText);
+		document.getElementById(MENU_TABS_ID).appendChild(this.sizeLi);
+	}
 
-	sizeLi.setAttribute("style", "display: inline;");
-	sizeLi.setAttribute("id", REMAINING_CHAR_BOX);
-	sizeSpan.setAttribute("style", "color: black;");
-	sizeLi.appendChild(sizeSpan);
-	sizeSpan.appendChild(sizeText);
-	document.getElementById(TABS_ID).appendChild(sizeLi);
+	update(currentSize) {
+		this.sizeSpan.textContent = MAX_WORKLOG_SIZE - currentSize;
+	}
+
+}
+
+function refreshRemainingChar(target, startSize) {
+	let extraSize = target.textLength || 0;
+	console.log(extraSize);
+	let newSize = extraSize + startSize;
+	document.getElementById(REMAINING_CHAR_BOX_ID).textContent = MAX_WORKLOG_SIZE - newSize;
 }
 
 function app () {
-	let workLog = WORKLOG_BOX;
-	let workLogSize = calcLogSize(workLog);
-	//console.log(workLogSize);
-	workLogSize && showRemainingChar(MAX_WORKLOG_SIZE, workLogSize);
+	let workLog = document.querySelector(WORKLOG_BOX);
+
+	if (workLog) {
+		let workLogSize = calcLogSize(workLog);
+		let workLogAdd = document.querySelector(WORKLOG_ADD_BOX);
+		let workLogAddSize = calcLogSize(workLogAdd);
+		let myCharBox = new RemainingCharBox();
+		myCharBox.update(workLogSize+workLogAddSize);
+
+		// refreshRemainingChar(sizeSpan, currentSize);
+
+		workLogAdd.addEventListener("input", function(evt) {
+			myCharBox.update(evt.target.textLength + workLogSize);
+		});
+	}
 }
 
 app();
