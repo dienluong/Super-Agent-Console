@@ -1,5 +1,5 @@
 /* eslint-env webextensions */
-const MAX_WORKLOG_SIZE = 32000;
+const MAX_WORKLOG_SIZE = 32000; // This is from error in Agent Console: "Work Log length cannot exceed 32000 characters (32000)"
 const MENU_TABS_ID = "prj";
 const REMAINING_CHAR_BOX_ID = "remaining-char-box";
 const WORKLOG_ADD_BOX = "textarea#TextBox_AddTo_WorkLog";
@@ -33,12 +33,13 @@ class RemainingCharBox {
 
 }
 
-function refreshRemainingChar(target, startSize) {
+/*function refreshRemainingChar(target, startSize) {
 	let extraSize = target.textLength || 0;
 	console.log(extraSize);
 	let newSize = extraSize + startSize;
 	document.getElementById(REMAINING_CHAR_BOX_ID).textContent = MAX_WORKLOG_SIZE - newSize;
 }
+*/
 
 function app () {
 	let workLog = document.querySelector(WORKLOG_BOX);
@@ -60,29 +61,3 @@ function app () {
 
 app();
 
-/*function refresh() {
-	document.location.reload(true);
-	var lTicketNodes = document.querySelectorAll("tr.level0, tr.level1, tr.level2, tr.level3");
-	var lTicketArray = [];
-	for (var i = 0; i < lTicketNodes.length; i++) {
-		var lTds = lTicketNodes[i].getElementsByTagName("td");
-		lTicketArray.push(
-			{
-				Id: lTds[0].textContent,
-				Status: lTds[1].textContent,
-				Severity: lTds[2].textContent,
-				Owner: lTds[3].textContent,
-				Customer: lTds[4].textContent,
-				Description: lTds[5].textContent,
-				InDate: lTds[6].textContent,
-				Product: lTds[7].textContent,
-				Elapsed: lTds[8].textContent
-			});
-	}
-	if (lTicketArray.length > 0) {
-		chrome.runtime.sendMessage(lTicketArray);
-	}
-}
-*/
-
-// window.setInterval(refresh, 10000);
