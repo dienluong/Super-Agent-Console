@@ -57,6 +57,13 @@ function app () {
 			myCharBox.update(evt.target.textLength + workLogSize);
 		});
 	}
+
+	// Prepopulate some fields for less annoying process of closing a ticket
+	document.getElementById("Repeater_Ticket_ctl00_DropDownList_ProjStatus").querySelector('option[value="0"]').selected = false;
+	document.getElementById("Repeater_Ticket_ctl00_DropDownList_ProjStatus").querySelector('option[value="61"]').selected = true;
+	document.getElementById("Repeater_Ticket_ctl00_DropDownList_ProblemArea").querySelector('option[value="0"]').selected = false;
+	document.getElementById("Repeater_Ticket_ctl00_DropDownList_ProblemArea").querySelector('option[value="207"]').selected = true;
+	document.getElementById("TextBox_AddTo_Resolution").value=".";
 }
 
 app();
