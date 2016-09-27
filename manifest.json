@@ -18,7 +18,10 @@
 
   "content_scripts": [
     {
-      "matches": ["https://network.nuance.com/portal/server.pt/gateway/PTARGS_0_9815_727_201_0_43/AgentConsole/AgentConsoleTicket.aspx?CIT=*"],
+      "matches": [
+        "https://network.nuance.com/portal/server.pt/gateway/PTARGS_0_9815_727_201_0_43/AgentConsole/AgentConsoleTicket.aspx?CIT=*",
+        "https://network.nuance.com/portal/server.pt/gateway/PTARGS_0_9815_727_201_0_43/http%3B/som-wciapp02.nuance.com/TSTools_v2/AgentConsole/AgentConsoleTicket.aspx?CIT=*"
+      ],
       "js": ["main.js"]
     }
   ],
