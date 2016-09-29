@@ -29,7 +29,6 @@ class RemainingCharBox {
 	update(currentSize) {
 		this.sizeSpan.textContent = MAX_WORKLOG_SIZE - currentSize;
 	}
-
 }
 
 function app () {
