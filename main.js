@@ -11,7 +11,6 @@ function calcLogSize(logElement) {
 	return logSize;
 }
 
-
 class RemainingCharBox {
 	constructor() {
 		this.sizeLi = document.createElement("li");
@@ -48,16 +47,17 @@ function app () {
 
 	let textAreas = document.querySelectorAll(TEXTAREA_BOX);
 	if (textAreas) {
-		let textArea1Size = calcLogSize(textAreas[0]);
-		let textAreaAddSize = calcLogSize(textAreas[1]);
+		var textAreaSize = 0;
+		for (let i = 0; i < textAreas.length; ++i) {
+			textAreaSize += calcLogSize(textAreas[i]);
+		}
 		let myCharBox = new RemainingCharBox();
-		myCharBox.update(textArea1Size+textAreaAddSize);
+		myCharBox.update(textAreaSize);
 
 		textAreas[0].addEventListener("input", function(evt) {
-			myCharBox.update(evt.target.textLength + textAreaAddSize);
+			myCharBox.update(evt.target.textLength + (calcLogSize(textAreas[1]) || 0));
 		});
 	}
-
 }
 
 app();
