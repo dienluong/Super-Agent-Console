@@ -1,8 +1,10 @@
 /* eslint-env webextensions */
 /* eslint-env es6 */
+//domJSON
 const MAX_WORKLOG_SIZE = 32000; // This is from error in Agent Console: "Work Log length cannot exceed 32000 characters (32000)"
 const MENU_TABS_ID = "prj";
 const REMAINING_CHAR_BOX_ID = "remaining-char-box";
+const TAB_CONTENT_AREA = "div#ticketLogsDiv";
 const TEXTAREA_BOX = "div#ticketLogsDiv textarea";
 document.body.style.border = "5px solid green";
 
@@ -30,6 +32,15 @@ class RemainingCharBox {
 	}
 }
 
+class tabCacheManager {
+	constructor(topLevel) {
+		this.nodeCacheJSON = domJSON.toJSON(topLevel);
+
+
+	}
+
+}
+
 function app () {
 
 	// Prepopulate some fields for less annoying process of closing a ticket
@@ -54,10 +65,14 @@ function app () {
 		let myCharBox = new RemainingCharBox();
 		myCharBox.update(textAreaSize);
 
-		textAreas[0].addEventListener("input", function(evt) {
-			myCharBox.update(evt.target.textLength + (calcLogSize(textAreas[1]) || 0));
-		});
+		if (textAreas.length >= 2) {
+			textAreas[0].addEventListener("input", function(evt) {
+				myCharBox.update(evt.target.textLength + calcLogSize(textAreas[1]));
+			});
+		}
 	}
+
+	let cache = new tabCacheManager(document.querySelector(TAB_CONTENT_AREA));
 }
 
 app();

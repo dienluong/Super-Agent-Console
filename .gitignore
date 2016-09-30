@@ -3,3 +3,5 @@ ticket1.html
 background.js
 strike.mp3
 ticket1_files/
+*.sublime-project
+*.sublime-workspace
