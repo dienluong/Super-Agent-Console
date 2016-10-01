@@ -5,6 +5,7 @@ const MAX_WORKLOG_SIZE = 32000; // This is from error in Agent Console: "Work Lo
 const MENU_TABS_ID = "prj";
 const REMAINING_CHAR_BOX_ID = "remaining-char-box";
 const TAB_CONTENT_AREA = "div#ticketLogsDiv";
+const TAB_LABEL = "div#ticketLogsDiv > div[style='float: left'] > span";
 const TEXTAREA_BOX = "div#ticketLogsDiv textarea";
 document.body.style.border = "5px solid green";
 
@@ -32,13 +33,24 @@ class RemainingCharBox {
 	}
 }
 
-class tabCacheManager {
-	constructor(topLevel) {
-		this.nodeCacheJSON = domJSON.toJSON(topLevel);
-
-
+class nodeCache {
+	constructor(id, topLevel) {
+		this.cacheId = null;
+		let nodeJSON = domJSON.toJSON(topLevel);
+		if (!sessionStorage.getItem(id)) {
+			try {
+				sessionStorage.setItem(id, JSON.stringify(nodeJSON));
+				this.cacheID = id;
+			} catch (e) {
+				console.log("Exceeded Storage Quota!");
+			}
+		}
 	}
 
+	printCache() {
+		let nodeJSON = sessionStorage.getItem(this.cacheId);
+		console.log(nodeJSON);
+	}
 }
 
 function app () {
@@ -72,7 +84,9 @@ function app () {
 		}
 	}
 
-	let cache = new tabCacheManager(document.querySelector(TAB_CONTENT_AREA));
+	let cacheID = document.querySelector(TAB_LABEL).textContent;
+	let cache = new nodeCache(cacheID, document.querySelector(TAB_CONTENT_AREA));
+	cache.printCache();
 }
 
 app();
